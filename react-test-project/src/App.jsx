@@ -9,7 +9,7 @@ class App extends Component {
       <React.Fragment>
         <Navbar />
         <div className="product-container">
-          <Product /> <Product /> <Product /> <Product />
+          <Product title="Tomaten" description="Text über Tomaten"/> <Product title="Gurken" description="Text über Gurken"/> <Product title="Karotten" description="Text über Karotten"/> <Product title="Paprika" description="Text über Paprika" />
         </div>
       </React.Fragment>
     );
