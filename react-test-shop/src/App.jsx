@@ -52,7 +52,7 @@ class App extends Component {
               description="Text über Paprika"
             />
           </div>
-          <ShoppingCart items={this.state.items} />
+          <ShoppingCart onDelete={this.deleteItem} items={this.state.items} />
         </div>
       </React.Fragment>
     );
