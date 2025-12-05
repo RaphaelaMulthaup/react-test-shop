@@ -30,10 +30,10 @@ class App extends Component {
     let itemToChangeAmount = currentItems.find((item) => item.name === name);
     itemToChangeAmount.amount += change;
     if (itemToChangeAmount.amount === 0) {
-      // currentItems = currentItems.filter((item) => item.name != name);
       this.deleteItem(name);
+    } else {
+      this.setState({ items: currentItems });
     }
-    this.setState({ items: currentItems });
   };
   render() {
     return (
@@ -62,7 +62,11 @@ class App extends Component {
               description="Text über Paprika"
             />
           </div>
-          <ShoppingCart onChange={this.changeAmount} onDelete={this.deleteItem} items={this.state.items} />
+          <ShoppingCart
+            onChange={this.changeAmount}
+            onDelete={this.deleteItem}
+            items={this.state.items}
+          />
         </div>
       </React.Fragment>
     );

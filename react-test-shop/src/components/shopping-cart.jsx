@@ -9,7 +9,24 @@ class ShoppingCart extends Component {
         {this.props.items.map((item) => (
           <div key={item.name}>
             {item.amount}x {item.name} {item.price}€
-            <button className="btn btn-primary deleteBtn" onClick={() => this.props.onDelete(item.name)}>Aus Warenkorb entfernen</button>
+            <button
+              className="btn btn-primary btnShoppingCart"
+              onClick={() => this.props.onDelete(item.name)}
+            >
+              Aus Warenkorb entfernen
+            </button>
+            <button
+              className="btn btn-primary btnShoppingCart"
+              onClick={() => this.props.onChange(item.name, 1)}
+            >
+              +
+            </button>
+            <button
+              className="btn btn-primary btnShoppingCart"
+              onClick={() => this.props.onChange(item.name, -1)}
+            >
+              -
+            </button>
           </div>
         ))}
       </div>
