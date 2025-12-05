@@ -27,8 +27,12 @@ class App extends Component {
   };
   changeAmount = (name, change) => {
     let currentItems = this.state.items;
-    let itemToChangeAmount = currentItems.find(item => item.name === name)
+    let itemToChangeAmount = currentItems.find((item) => item.name === name);
     itemToChangeAmount.amount += change;
+    if (itemToChangeAmount.amount === 0) {
+      // currentItems = currentItems.filter((item) => item.name != name);
+      this.deleteItem(name);
+    }
     this.setState({ items: currentItems });
   };
   render() {
