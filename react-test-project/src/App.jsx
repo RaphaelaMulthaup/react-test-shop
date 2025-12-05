@@ -18,6 +18,13 @@ class App extends Component {
     this.setState({ items: currentItems });
     console.log(this.state);
   };
+  deleteItem = (name) => {
+    let currentItems = this.state.items;
+    let itemsWithoutTheDeleted = currentItems.filter(
+      (item) => item.namme != name
+    );
+    this.setState({ items: itemsWithoutTheDeleted });
+  };
   render() {
     return (
       <React.Fragment>
