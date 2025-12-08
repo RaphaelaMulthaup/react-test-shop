@@ -6,6 +6,12 @@ import ShoppingCart from "./components/shopping-cart";
 class App extends Component {
   state = {
     items: [],
+    products: [
+      { name: "Tomaten", price: 2.5, description: "Text über Tomaten" },
+      { name: "Gurken", price: 3.0, description: "Text über Gurken" },
+      { name: "Karotten", price: 1.5, description: "Text über Karotten" },
+      { name: "Paprika", price: 2.0, description: "Text über Paprika" },
+    ],
   };
   addItem = (amount, name, price) => {
     let currentItems = this.state.items;
@@ -41,7 +47,14 @@ class App extends Component {
         <Navbar />
         <div className="main-container">
           <div className="product-container">
-            <Product
+            {this.state.products.map((product) => (
+              <Product
+                onAdd={() => this.addItem(1, product.name, product.price)}
+                title={product.name}
+                description={product.description}
+              />
+            ))}
+            {/* <Product
               onAdd={() => this.addItem(1, "Tomaten", 2.5)}
               title="Tomaten"
               description="Text über Tomaten"
@@ -60,7 +73,7 @@ class App extends Component {
               onAdd={() => this.addItem(1, "Paprika", 2.0)}
               title="Paprika"
               description="Text über Paprika"
-            />
+            /> */}
           </div>
           <ShoppingCart
             onChange={this.changeAmount}
