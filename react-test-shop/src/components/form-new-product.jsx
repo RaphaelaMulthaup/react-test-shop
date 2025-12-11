@@ -26,7 +26,8 @@ class FormNewProduct extends Component {
     return (
       <form>
         <label>
-          Produktname:
+          <span className="label">Produktname:</span>
+
           <input
             name="name"
             value={name}
@@ -37,7 +38,8 @@ class FormNewProduct extends Component {
         </label>
 
         <label>
-          Preis:
+          <span className="label"> Preis:</span>
+
           <input
             name="price"
             value={price}
@@ -48,7 +50,8 @@ class FormNewProduct extends Component {
         </label>
 
         <label>
-          Beschreibung:
+          <span className="label">Beschreibung:</span>
+
           <input
             name="description"
             value={description}
@@ -59,7 +62,8 @@ class FormNewProduct extends Component {
         </label>
 
         <label>
-          Bild-URL:
+          <span className="label">Bild-URL:</span>
+
           <input
             name="imageUrl"
             value={imageUrl}
@@ -68,6 +72,7 @@ class FormNewProduct extends Component {
             placeholder="z. B. /images/apfelsaft.png oder https://..."
           />
         </label>
+        <button></button>
       </form>
     );
   }

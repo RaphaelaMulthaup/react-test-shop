@@ -3,6 +3,11 @@
     padding-right: 32px;
 }
 
+.main-container-left {
+    display: flex;
+    flex-direction: column;
+}
+
 .product-container {
     display: flex;
     gap: 32px;
@@ -13,6 +18,18 @@
     .product-container {
         flex-direction: column;
     }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 190px;
+}
+
+.label {
+    display: block;
+    width: 190px;
 }
 
 .shopping-cart {

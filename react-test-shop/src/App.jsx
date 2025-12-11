@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Navbar from "./components/navbar";
 import Product from "./components/product";
 import ShoppingCart from "./components/shopping-cart";
+import FormNewProduct from "./components/form-new-product";
 
 class App extends Component {
   state = {
@@ -52,21 +53,24 @@ class App extends Component {
       this.setState({ items: currentItems });
     }
   };
-  
+
   render() {
     return (
       <React.Fragment>
         <Navbar />
         <div className="main-container">
-          <div className="product-container">
-            {this.state.products.map((product) => (
-              <Product
-                key={product.name}
-                onAdd={() => this.addItem(product)}
-                title={product.name}
-                description={product.description}
-              />
-            ))}
+          <div className="main-container-left">
+            <div className="product-container">
+              {this.state.products.map((product) => (
+                <Product
+                  key={product.name}
+                  onAdd={() => this.addItem(product)}
+                  title={product.name}
+                  description={product.description}
+                />
+              ))}
+            </div>
+            <FormNewProduct />
           </div>
           <ShoppingCart
             onChange={this.changeAmount}
