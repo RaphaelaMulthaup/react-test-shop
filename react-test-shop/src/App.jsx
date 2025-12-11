@@ -56,11 +56,6 @@ class App extends Component {
 
   addNewProduct = (newProduct) => {
     this.setState((prevState) => {
-      const exists = prevState.products.some(
-        (product) => product.name === newProduct.name
-      );
-      if (exists) return prevState; // oder: kein Update notwendig
-
       return {
         products: [...prevState.products, newProduct],
       };
@@ -83,7 +78,7 @@ class App extends Component {
                 />
               ))}
             </div>
-            <FormNewProduct onSubmit={this.addNewProduct} />
+            <FormNewProduct onSubmit={this.addNewProduct} existingProducts={this.state.products}/>
           </div>
           <ShoppingCart
             onChange={this.changeAmount}

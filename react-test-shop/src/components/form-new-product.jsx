@@ -6,8 +6,8 @@ class FormNewProduct extends Component {
       name: "",
       price: "",
       description: "",
-
     },
+    error: null
   };
 
   handleChange = (e) => {
@@ -23,7 +23,21 @@ class FormNewProduct extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { newProduct } = this.state;
+    const exists = this.props.existingProducts.some(
+      (product) => product.name === newProduct.name
+    );
+    if (exists) {
+      this.setState({
+        error: "Ein Produkt mit diesem Namen existiert bereits.",
+      });
+      return;
+    }
+
     this.props.onSubmit(newProduct);
+    this.setState({
+      newProduct: { name: "", price: "", description: "", imageUrl: "" },
+      error: null,
+    });
   };
 
   render() {
@@ -66,7 +80,7 @@ class FormNewProduct extends Component {
             placeholder="z. B. Frischer Bio-Apfelsaft"
           />
         </label>
-
+        {this.state.error && <div className="error">{this.state.error}</div>}
 
         <button type="submit">Produkt hinzufügen</button>
       </form>
