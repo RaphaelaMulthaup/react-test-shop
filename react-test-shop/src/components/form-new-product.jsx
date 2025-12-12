@@ -7,7 +7,9 @@ class FormNewProduct extends Component {
       price: "",
       description: "",
     },
-    error: null
+    error: null,
+    nameMissing: null,
+    incorrectPrice: null,
   };
 
   handleChange = (e) => {
@@ -23,6 +25,28 @@ class FormNewProduct extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { newProduct } = this.state;
+    const nameEntered = newProduct.name != "";
+    if (!nameEntered) {
+      this.setState({
+        nameMissing: "Trage einen Namen ein.",
+      });
+      return;
+    } else {
+      this.setState({
+        nameMissing: null,
+      });
+    }
+    const priceLowerZero = newProduct.price <= 0;
+    if (priceLowerZero) {
+      this.setState({
+        incorrectPrice: "Trage einen Preis ein, der größer als null ist.",
+      });
+      return;
+    } else {
+      this.setState({
+        incorrectPrice: null,
+      });
+    }
     const exists = this.props.existingProducts.some(
       (product) => product.name === newProduct.name
     );
@@ -31,12 +55,18 @@ class FormNewProduct extends Component {
         error: "Ein Produkt mit diesem Namen existiert bereits.",
       });
       return;
+    } else {
+      this.setState({
+        error: null,
+      });
     }
 
     this.props.onSubmit(newProduct);
     this.setState({
       newProduct: { name: "", price: "", description: "", imageUrl: "" },
       error: null,
+      nameMissing: null,
+      incorrectPrice: null,
     });
   };
 
@@ -56,6 +86,9 @@ class FormNewProduct extends Component {
             placeholder="z. B. Apfelsaft"
           />
         </label>
+        {this.state.nameMissing && (
+          <div className="error">{this.state.nameMissing}</div>
+        )}
 
         <label>
           <span className="label"> Preis:</span>
@@ -68,6 +101,9 @@ class FormNewProduct extends Component {
             placeholder="z. B. 3.99"
           />
         </label>
+        {this.state.incorrectPrice && (
+          <div className="error">{this.state.incorrectPrice}</div>
+        )}
 
         <label>
           <span className="label">Beschreibung:</span>
