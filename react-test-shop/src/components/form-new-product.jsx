@@ -16,10 +16,13 @@ class FormNewProduct extends Component {
 
   handleChange = (e) => {
     const { name, value } = e.target;
+
+    const parsedValue = name === "price" ? Number(value) : value;
+
     this.setState((prevState) => ({
       newProduct: {
         ...prevState.newProduct,
-        [name]: value,
+        [name]: parsedValue,
       },
     }));
   };
@@ -55,7 +58,7 @@ class FormNewProduct extends Component {
     }
     this.props.onSubmit(newProduct);
     this.setState({
-      newProduct: { name: "", price: "", description: "", imageUrl: "" },
+      newProduct: { name: "", price: "", description: ""},
       error: null,
       nameMissing: null,
       incorrectPrice: null,
@@ -78,7 +81,7 @@ class FormNewProduct extends Component {
             placeholder="z. B. Apfelsaft"
           />
         </label>
-        {this.state.nameMissing && (
+        {this.state.errors.nameMissing && (
           <div className="error">{this.state.nameMissing}</div>
         )}
 
@@ -91,9 +94,10 @@ class FormNewProduct extends Component {
             onChange={this.handleChange}
             type="number"
             placeholder="z. B. 3.99"
+            step="0.01"
           />
         </label>
-        {this.state.incorrectPrice && (
+        {this.state.errors.incorrectPrice && (
           <div className="error">{this.state.incorrectPrice}</div>
         )}
 
@@ -108,7 +112,7 @@ class FormNewProduct extends Component {
             placeholder="z. B. Frischer Bio-Apfelsaft"
           />
         </label>
-        {this.state.error && <div className="error">{this.state.error}</div>}
+        {this.state.errors.error && <div className="error">{this.state.error}</div>}
 
         <button type="submit">Produkt hinzufügen</button>
       </form>
