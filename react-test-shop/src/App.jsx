@@ -75,6 +75,7 @@ class App extends Component {
                   onAdd={() => this.addItem(product)}
                   title={product.name}
                   description={product.description}
+                  price={product.price}
                 />
               ))}
             </div>
