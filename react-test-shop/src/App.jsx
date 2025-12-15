@@ -8,56 +8,67 @@ class App extends Component {
   state = {
     items: [],
     products: [
-      { name: "Tomaten", price: 2.5, description: "Text über Tomaten" },
-      { name: "Gurken", price: 3.0, description: "Text über Gurken" },
-      { name: "Karotten", price: 1.5, description: "Text über Karotten" },
-      { name: "Paprika", price: 2.0, description: "Text über Paprika" },
+      { id: 1, name: "Tomaten", price: 2.5, description: "Text über Tomaten" },
+      { id: 2, name: "Gurken", price: 3.0, description: "Text über Gurken" },
+      {
+        id: 3,
+        name: "Karotten",
+        price: 1.5,
+        description: "Text über Karotten",
+      },
+      { id: 4, name: "Paprika", price: 2.0, description: "Text über Paprika" },
     ],
   };
 
   addItem = (product) => {
     this.setState((prevState) => {
-      const updatedItems = prevState.items.map((item) => {
-        if (item.name === product.name) {
-          return { ...item, amount: item.amount + 1 };
-        }
-        return item;
-      });
-      const exists = prevState.items.some((item) => item.name === product.name);
+      const exists = prevState.items.some((item) => item.id === product.id);
+
+      if (exists) {
+        return {
+          items: prevState.items.map((item) =>
+            item.id === product.id ? { ...item, amount: item.amount + 1 } : item
+          ),
+        };
+      }
+
       return {
-        items: exists
-          ? updatedItems
-          : [
-              ...prevState.items,
-              { amount: 1, name: product.name, price: product.price },
-            ],
+        items: [
+          ...prevState.items,
+          {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            amount: 1,
+          },
+        ],
       };
     });
   };
 
-  deleteItem = (name) => {
+  deleteItem = (id) => {
     let currentItems = this.state.items;
-    let itemsWithoutTheDeleted = currentItems.filter(
-      (item) => item.name != name
-    );
+    let itemsWithoutTheDeleted = currentItems.filter((item) => item.id !== id);
     this.setState({ items: itemsWithoutTheDeleted });
   };
 
-  changeAmount = (name, change) => {
-    let currentItems = this.state.items;
-    let itemToChangeAmount = currentItems.find((item) => item.name === name);
-    itemToChangeAmount.amount += change;
-    if (itemToChangeAmount.amount === 0) {
-      this.deleteItem(name);
-    } else {
-      this.setState({ items: currentItems });
-    }
+  changeAmount = (id, change) => {
+    this.setState((prevState) => {
+      const items = prevState.items
+        .map((item) =>
+          item.id === id ? { ...item, amount: item.amount + change } : item
+        )
+        .filter((item) => item.amount > 0);
+
+      return { items };
+    });
   };
 
   addNewProduct = (newProduct) => {
     this.setState((prevState) => {
+      const nextId = Math.max(...prevState.products.map((p) => p.id)) + 1;
       return {
-        products: [...prevState.products, newProduct],
+        products: [...prevState.products, { ...newProduct, id: nextId }],
       };
     });
   };
@@ -71,7 +82,7 @@ class App extends Component {
             <div className="product-container">
               {this.state.products.map((product) => (
                 <Product
-                  key={product.name}
+                  key={product.id}
                   onAdd={() => this.addItem(product)}
                   title={product.name}
                   description={product.description}
@@ -79,7 +90,10 @@ class App extends Component {
                 />
               ))}
             </div>
-            <FormNewProduct onSubmit={this.addNewProduct} existingProducts={this.state.products}/>
+            <FormNewProduct
+              onSubmit={this.addNewProduct}
+              existingProducts={this.state.products}
+            />
           </div>
           <ShoppingCart
             onChange={this.changeAmount}

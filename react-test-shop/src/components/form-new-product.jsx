@@ -8,9 +8,9 @@ class FormNewProduct extends Component {
       description: "",
     },
     errors: {
-      error: null,
-      nameMissing: null,
-      incorrectPrice: null,
+      name: null,
+      price: null,
+      duplicate: null,
     },
   };
 
@@ -33,24 +33,24 @@ class FormNewProduct extends Component {
     let errors = {};
 
     if (!newProduct.name.trim()) {
-      errors.nameMissing = "Trage einen Namen ein.";
+      errors.name = "Trage einen Namen ein.";
     } else {
-      errors.nameMissing = null;
+      errors.name = null;
     }
 
     if (newProduct.price <= 0) {
-      errors.incorrectPrice = "Trage einen Preis ein, der größer als null ist.";
+      errors.price = "Trage einen Preis ein, der größer als null ist.";
     } else {
-      errors.incorrectPrice = null;
+      errors.price = null;
     }
 
     const exists = this.props.existingProducts.some(
-      (product) => product.name === newProduct.name
+      (product) => product.name.toLowerCase() === newProduct.name.toLowerCase()
     );
     if (exists) {
-      errors.error = "Ein Produkt mit diesem Namen existiert bereits.";
+      errors.duplicate = "Ein Produkt mit diesem Namen existiert bereits.";
     } else {
-      errors.error = null;
+      errors.duplicate = null;
     }
     this.setState(errors);
     if (Object.values(errors).some((value) => value !== null)) {
@@ -58,10 +58,12 @@ class FormNewProduct extends Component {
     }
     this.props.onSubmit(newProduct);
     this.setState({
-      newProduct: { name: "", price: "", description: ""},
-      error: null,
-      nameMissing: null,
-      incorrectPrice: null,
+      newProduct: { name: "", price: "", description: "" },
+      errors: {
+        name: null,
+        price: null,
+        duplicate: null,
+      },
     });
   };
 
@@ -81,8 +83,8 @@ class FormNewProduct extends Component {
             placeholder="z. B. Apfelsaft"
           />
         </label>
-        {this.state.errors.nameMissing && (
-          <div className="error">{this.state.nameMissing}</div>
+        {this.state.errors.name && (
+          <div className="error">{this.state.name}</div>
         )}
 
         <label>
@@ -97,8 +99,8 @@ class FormNewProduct extends Component {
             step="0.01"
           />
         </label>
-        {this.state.errors.incorrectPrice && (
-          <div className="error">{this.state.incorrectPrice}</div>
+        {this.state.errors.price && (
+          <div className="error">{this.state.price}</div>
         )}
 
         <label>
@@ -112,7 +114,9 @@ class FormNewProduct extends Component {
             placeholder="z. B. Frischer Bio-Apfelsaft"
           />
         </label>
-        {this.state.errors.error && <div className="error">{this.state.error}</div>}
+        {this.state.errors.duplicate && (
+          <div className="error">{this.state.duplicate}</div>
+        )}
 
         <button type="submit">Produkt hinzufügen</button>
       </form>
