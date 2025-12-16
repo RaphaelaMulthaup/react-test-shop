@@ -52,7 +52,7 @@ class FormNewProduct extends Component {
     } else {
       errors.duplicate = null;
     }
-    this.setState(errors);
+    this.setState({ errors });
     if (Object.values(errors).some((value) => value !== null)) {
       return;
     }
@@ -84,7 +84,7 @@ class FormNewProduct extends Component {
           />
         </label>
         {this.state.errors.name && (
-          <div className="error">{this.state.name}</div>
+          <div className="error">{this.state.errors.name}</div>
         )}
 
         <label>
@@ -100,7 +100,7 @@ class FormNewProduct extends Component {
           />
         </label>
         {this.state.errors.price && (
-          <div className="error">{this.state.price}</div>
+          <div className="error">{this.state.errors.price}</div>
         )}
 
         <label>
@@ -115,7 +115,7 @@ class FormNewProduct extends Component {
           />
         </label>
         {this.state.errors.duplicate && (
-          <div className="error">{this.state.duplicate}</div>
+          <div className="error">{this.state.errors.duplicate}</div>
         )}
 
         <button type="submit">Produkt hinzufügen</button>

@@ -8,26 +8,45 @@ class App extends Component {
   state = {
     items: [],
     products: [
-      { id: 1, name: "Tomaten", price: 2.5, description: "Text über Tomaten" },
-      { id: 2, name: "Gurken", price: 3.0, description: "Text über Gurken" },
       {
-        id: 3,
+        productId: 1,
+        name: "Tomaten",
+        price: 2.5,
+        description: "Text über Tomaten",
+      },
+      {
+        productId: 2,
+        name: "Gurken",
+        price: 3.0,
+        description: "Text über Gurken",
+      },
+      {
+        productId: 3,
         name: "Karotten",
         price: 1.5,
         description: "Text über Karotten",
       },
-      { id: 4, name: "Paprika", price: 2.0, description: "Text über Paprika" },
+      {
+        productId: 4,
+        name: "Paprika",
+        price: 2.0,
+        description: "Text über Paprika",
+      },
     ],
   };
 
   addItem = (product) => {
     this.setState((prevState) => {
-      const exists = prevState.items.some((item) => item.id === product.id);
+      const exists = prevState.items.some(
+        (item) => item.productId === product.productId
+      );
 
       if (exists) {
         return {
           items: prevState.items.map((item) =>
-            item.id === product.id ? { ...item, amount: item.amount + 1 } : item
+            item.productId === product.productId
+              ? { ...item, amount: item.amount + 1 }
+              : item
           ),
         };
       }
@@ -36,9 +55,7 @@ class App extends Component {
         items: [
           ...prevState.items,
           {
-            id: product.id,
-            name: product.name,
-            price: product.price,
+            productId: product.productId,
             amount: 1,
           },
         ],
@@ -46,19 +63,21 @@ class App extends Component {
     });
   };
 
-  deleteItem = (id) => {
-    let currentItems = this.state.items;
-    let itemsWithoutTheDeleted = currentItems.filter((item) => item.id !== id);
-    this.setState({ items: itemsWithoutTheDeleted });
+  deleteItem = (productId) => {
+    this.setState((prevState) => ({
+      items: prevState.items.filter((item) => item.productId !== productId),
+    }));
   };
 
-  changeAmount = (id, change) => {
+  changeAmount = (productId, change) => {
     this.setState((prevState) => {
       const items = prevState.items
         .map((item) =>
-          item.id === id ? { ...item, amount: item.amount + change } : item
+          item.productId === productId
+            ? { ...item, amount: item.amount + change }
+            : item
         )
-        .filter((item) => item.amount > 0);
+        .filter((item) => item.amount >= 0);
 
       return { items };
     });
@@ -66,23 +85,33 @@ class App extends Component {
 
   addNewProduct = (newProduct) => {
     this.setState((prevState) => {
-      const nextId = Math.max(...prevState.products.map((p) => p.id)) + 1;
+      const nextId =
+        Math.max(...prevState.products.map((p) => p.productId)) + 1;
       return {
-        products: [...prevState.products, { ...newProduct, id: nextId }],
+        products: [...prevState.products, { ...newProduct, productId: nextId }],
       };
     });
   };
 
   render() {
+    const cartItems = this.state.items.map((item) => {
+      const product = this.state.products.find((p) => p.productId === item.productId);
+
+      return {
+        ...product,
+        amount: item.amount,
+      };
+    });
+
     return (
-      <React.Fragment>
+      <>
         <Navbar />
         <div className="main-container">
           <div className="main-container-left">
             <div className="product-container">
               {this.state.products.map((product) => (
                 <Product
-                  key={product.id}
+                  key={product.productId}
                   onAdd={() => this.addItem(product)}
                   title={product.name}
                   description={product.description}
@@ -90,18 +119,20 @@ class App extends Component {
                 />
               ))}
             </div>
+
             <FormNewProduct
               onSubmit={this.addNewProduct}
               existingProducts={this.state.products}
             />
           </div>
+
           <ShoppingCart
+            items={cartItems}
             onChange={this.changeAmount}
             onDelete={this.deleteItem}
-            items={this.state.items}
           />
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }
