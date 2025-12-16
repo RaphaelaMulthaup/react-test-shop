@@ -77,7 +77,7 @@ class App extends Component {
             ? { ...item, amount: item.amount + change }
             : item
         )
-        .filter((item) => item.amount >= 0);
+        .filter((item) => item.amount > 0);
 
       return { items };
     });
