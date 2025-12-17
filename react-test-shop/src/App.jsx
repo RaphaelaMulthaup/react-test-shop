@@ -95,15 +95,6 @@ class App extends Component {
     }));
   };
 
-  getCartItems() {
-    return this.state.items.map((item) => {
-      const product = this.state.products.find(
-        (p) => p.productId === item.productId
-      );
-      return { ...product, amount: item.amount };
-    });
-  }
-
   render() {
     return (
       <>
@@ -115,7 +106,8 @@ class App extends Component {
             onAddNewProduct={this.addNewProduct}
           />
           <ShoppingCart
-            items={this.getCartItems()}
+            items={this.state.items}
+            products={this.state.products}
             onChange={this.changeAmount}
             onDelete={this.deleteItem}
           />
