@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./components/navbar";
-import Product from "./components/product";
 import ShoppingCart from "./components/shopping-cart";
-import FormNewProduct from "./components/form-new-product";
+import ProductPage from "./components/product-page";
 
 class App extends Component {
   state = {
@@ -84,50 +83,39 @@ class App extends Component {
   };
 
   addNewProduct = (newProduct) => {
-    this.setState((prevState) => {
-      const nextId =
-        Math.max(...prevState.products.map((p) => p.productId)) + 1;
-      return {
-        products: [...prevState.products, { ...newProduct, productId: nextId }],
-      };
-    });
+    this.setState((prevState) => ({
+      products: [
+        ...prevState.products,
+        {
+          ...newProduct,
+          productId:
+            Math.max(...prevState.products.map((p) => p.productId)) + 1,
+        },
+      ],
+    }));
   };
 
-  render() {
-    const cartItems = this.state.items.map((item) => {
-      const product = this.state.products.find((p) => p.productId === item.productId);
-
-      return {
-        ...product,
-        amount: item.amount,
-      };
+  getCartItems() {
+    return this.state.items.map((item) => {
+      const product = this.state.products.find(
+        (p) => p.productId === item.productId
+      );
+      return { ...product, amount: item.amount };
     });
+  }
 
+  render() {
     return (
       <>
         <Navbar />
         <div className="main-container">
-          <div className="main-container-left">
-            <div className="product-container">
-              {this.state.products.map((product) => (
-                <Product
-                  key={product.productId}
-                  onAdd={() => this.addItem(product)}
-                  title={product.name}
-                  description={product.description}
-                  price={product.price}
-                />
-              ))}
-            </div>
-
-            <FormNewProduct
-              onSubmit={this.addNewProduct}
-              existingProducts={this.state.products}
-            />
-          </div>
-
+          <ProductPage
+            products={this.state.products}
+            onAddItem={this.addItem}
+            onAddNewProduct={this.addNewProduct}
+          />
           <ShoppingCart
-            items={cartItems}
+            items={this.getCartItems()}
             onChange={this.changeAmount}
             onDelete={this.deleteItem}
           />
