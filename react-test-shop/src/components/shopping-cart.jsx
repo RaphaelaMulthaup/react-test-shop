@@ -1,14 +1,16 @@
 import React, { Component } from "react";
+import CartItem from "./cart-item";
 
 class ShoppingCart extends Component {
-  state = {};
-
   getCartItems() {
     const { items, products } = this.props;
-    return items.map((item) => {
-      const product = products.find((p) => p.productId === item.productId);
-      return { ...product, amount: item.amount };
-    });
+    return items
+      .map((item) => {
+        const product = products.find((p) => p.productId === item.productId);
+        if (!product) return null;
+        return { ...product, amount: item.amount };
+      })
+      .filter(Boolean);
   }
 
   render() {
@@ -18,27 +20,12 @@ class ShoppingCart extends Component {
       <div className="shopping-cart">
         <h2>Warenkorb</h2>
         {cartItems.map((item) => (
-          <div key={item.productId}>
-            {item.amount}x {item.name} {item.price}€
-            <button
-              className="btn btn-primary btnShoppingCart"
-              onClick={() => this.props.onDelete(item.productId)}
-            >
-              Aus Warenkorb entfernen
-            </button>
-            <button
-              className="btn btn-primary btnShoppingCart"
-              onClick={() => this.props.onChange(item.productId, 1)}
-            >
-              +
-            </button>
-            <button
-              className="btn btn-primary btnShoppingCart"
-              onClick={() => this.props.onChange(item.productId, -1)}
-            >
-              -
-            </button>
-          </div>
+          <CartItem
+            key={item.productId}
+            item={item}
+            onDelete={this.props.onDelete}
+            onChange={this.props.onChange}
+          />
         ))}
       </div>
     );
