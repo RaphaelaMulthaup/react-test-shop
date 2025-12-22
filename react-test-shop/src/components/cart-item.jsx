@@ -1,5 +1,3 @@
-import React, { Component } from "react";
-
 const CartItem = ({ name, price, amount, productId, onDelete, onChange }) => {
     return (
       <div>
