@@ -22,7 +22,7 @@ class ShoppingCart extends Component {
         {cartItems.map((item) => (
           <CartItem
             key={item.productId}
-            item={item}
+            {...item}
             onDelete={this.props.onDelete}
             onChange={this.props.onChange}
           />

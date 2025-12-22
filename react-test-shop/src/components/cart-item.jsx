@@ -1,33 +1,29 @@
 import React, { Component } from "react";
 
-class CartItem extends Component {
-  render() {
-    const { item, onDelete, onChange } = this.props;
-
+const CartItem = ({ name, price, amount, productId, onDelete, onChange }) => {
     return (
       <div>
-        {item.amount}x {item.name} {item.price}€
+        {amount}x {name} {price}€
         <button
           className="btn btn-primary btnShoppingCart"
-          onClick={() => onDelete(item.productId)}
+          onClick={() => onDelete(productId)}
         >
           Aus Warenkorb entfernen
         </button>
         <button
           className="btn btn-primary btnShoppingCart"
-          onClick={() => onChange(item.productId, 1)}
+          onClick={() => onChange(productId, 1)}
         >
           +
         </button>
         <button
           className="btn btn-primary btnShoppingCart"
-          onClick={() => onChange(item.productId, -1)}
+          onClick={() => onChange(productId, -1)}
         >
           -
         </button>
       </div>
     );
-  }
-}
+  };
 
 export default CartItem;
