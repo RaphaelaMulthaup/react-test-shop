@@ -34,16 +34,16 @@ class App extends Component {
     ],
   };
 
-  addItem = (product) => {
+  addItem = (productId) => {
     this.setState((prevState) => {
       const exists = prevState.items.some(
-        (item) => item.productId === product.productId
+        (item) => item.productId === productId
       );
 
       if (exists) {
         return {
           items: prevState.items.map((item) =>
-            item.productId === product.productId
+            item.productId === productId
               ? { ...item, amount: item.amount + 1 }
               : item
           ),
@@ -54,7 +54,7 @@ class App extends Component {
         items: [
           ...prevState.items,
           {
-            productId: product.productId,
+            productId: productId,
             amount: 1,
           },
         ],
