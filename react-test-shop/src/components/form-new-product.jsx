@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { validateProduct } from "./../validateProduct";
 
 class FormNewProduct extends Component {
   state = {
@@ -29,34 +30,15 @@ class FormNewProduct extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { newProduct } = this.state;
-    let errors = {};
-
-    if (!newProduct.name.trim()) {
-      errors.name = "Trage einen Namen ein.";
-    } else {
-      errors.name = null;
-    }
-
-    if (newProduct.price <= 0) {
-      errors.price = "Trage einen Preis ein, der größer als null ist.";
-    } else {
-      errors.price = null;
-    }
-
-    const exists = this.props.existingProducts.some(
-      (product) => product.name.toLowerCase() === newProduct.name.toLowerCase()
+    const errors = validateProduct(
+      this.state.newProduct,
+      this.props.existingProducts
     );
-    if (exists) {
-      errors.duplicate = "Ein Produkt mit diesem Namen existiert bereits.";
-    } else {
-      errors.duplicate = null;
-    }
     this.setState({ errors });
     if (Object.values(errors).some((value) => value !== null)) {
       return;
     }
-    this.props.onSubmit(newProduct);
+    this.props.onSubmit(this.state.newProduct);
     this.setState({
       newProduct: { name: "", price: "", description: "" },
       errors: {
