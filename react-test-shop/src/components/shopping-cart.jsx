@@ -1,7 +1,7 @@
 import CartItem from "./cart-item";
 
-const ShoppingCart = ({ items, products, onDelete, onChange }) => {
-  const cartItems = items
+const ShoppingCart = ({ cartItems, products, onDelete, onChange }) => {
+  const completeCartItems = cartItems
     .map((item) => {
       const product = products.find((p) => p.productId === item.productId);
       if (!product) return null;
@@ -12,7 +12,7 @@ const ShoppingCart = ({ items, products, onDelete, onChange }) => {
   return (
     <div className="shopping-cart">
       <h2>Warenkorb</h2>
-      {cartItems.map((item) => (
+      {completeCartItems.map((item) => (
         <CartItem
           key={item.productId}
           {...item}

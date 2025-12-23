@@ -5,7 +5,7 @@ import ProductPage from "./components/product-page";
 
 class App extends Component {
   state = {
-    items: [],
+    cartItems: [],
     products: [
       {
         productId: 1,
@@ -34,15 +34,15 @@ class App extends Component {
     ],
   };
 
-  addItem = (productId) => {
+  addToCart = (productId) => {
     this.setState((prevState) => {
-      const exists = prevState.items.some(
+      const exists = prevState.cartItems.some(
         (item) => item.productId === productId
       );
 
       if (exists) {
         return {
-          items: prevState.items.map((item) =>
+          cartItems: prevState.cartItems.map((item) =>
             item.productId === productId
               ? { ...item, amount: item.amount + 1 }
               : item
@@ -51,8 +51,8 @@ class App extends Component {
       }
 
       return {
-        items: [
-          ...prevState.items,
+        cartItems: [
+          ...prevState.cartItems,
           {
             productId: productId,
             amount: 1,
@@ -64,13 +64,13 @@ class App extends Component {
 
   deleteItem = (productId) => {
     this.setState((prevState) => ({
-      items: prevState.items.filter((item) => item.productId !== productId),
+      cartItems: prevState.cartItems.filter((item) => item.productId !== productId),
     }));
   };
 
-  changeAmount = (productId, change) => {
+  updateCartQuantity = (productId, change) => {
     this.setState((prevState) => {
-      const items = prevState.items
+      const cartItems = prevState.cartItems
         .map((item) =>
           item.productId === productId
             ? { ...item, amount: item.amount + change }
@@ -78,7 +78,7 @@ class App extends Component {
         )
         .filter((item) => item.amount > 0);
 
-      return { items };
+      return { cartItems };
     });
   };
 
@@ -102,13 +102,13 @@ class App extends Component {
         <div className="main-container">
           <ProductPage
             products={this.state.products}
-            onAddItem={this.addItem}
+            onaddToCart={this.addToCart}
             onAddNewProduct={this.addNewProduct}
           />
           <ShoppingCart
-            items={this.state.items}
+            cartItems={this.state.cartItems}
             products={this.state.products}
-            onChange={this.changeAmount}
+            onChange={this.updateCartQuantity}
             onDelete={this.deleteItem}
           />
         </div>
