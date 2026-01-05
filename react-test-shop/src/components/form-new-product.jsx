@@ -1,109 +1,94 @@
-import React, { Component } from "react";
+import { useState } from "react";
 import { validateProduct } from "./../validateProduct";
 
-class FormNewProduct extends Component {
-  state = {
-    newProduct: {
-      name: "",
-      price: "",
-      description: "",
-    },
-    errors: {
-      name: null,
-      price: null,
-      duplicate: null,
-    },
-  };
+function FormNewProduct({ existingProducts, onSubmit }) {
+  const [newProduct, setNewProduct] = useState({
+    name: "",
+    price: "",
+    description: "",
+  });
+  const [errors, setErrors] = useState({
+    name: null,
+    price: null,
+    duplicate: null,
+  });
 
-  handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
 
     const parsedValue = name === "price" ? Number(value) : value;
 
-    this.setState((prevState) => ({
-      newProduct: {
-        ...prevState.newProduct,
-        [name]: parsedValue,
-      },
+    setNewProduct((prevNewProduct) => ({
+      ...prevNewProduct,
+      [name]: parsedValue,
     }));
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const errors = validateProduct(
-      this.state.newProduct,
-      this.props.existingProducts
-    );
-    this.setState({ errors });
-    if (Object.values(errors).some((value) => value !== null)) {
+    const validationErrors = validateProduct(newProduct, existingProducts);
+    setErrors(validationErrors);
+    if (Object.values(validationErrors).some((value) => value !== null)) {
       return;
     }
-    this.props.onSubmit(this.state.newProduct);
-    this.setState({
-      newProduct: { name: "", price: "", description: "" },
-      errors: {
-        name: null,
-        price: null,
-        duplicate: null,
-      },
+    onSubmit(newProduct);
+    setNewProduct({ name: "", price: "", description: "" });
+    setErrors({
+      name: null,
+      price: null,
+      duplicate: null,
     });
   };
 
-  render() {
-    const { name, price, description } = this.state.newProduct;
+  const { name, price, description } = newProduct;
 
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          <span className="label">Produktname:</span>
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        <span className="label">Produktname:</span>
 
-          <input
-            name="name"
-            value={name}
-            onChange={this.handleChange}
-            type="text"
-            placeholder="z. B. Apfelsaft"
-          />
-        </label>
-        {this.state.errors.name && (
-          <div className="error">{this.state.errors.name}</div>
-        )}
+        <input
+          name="name"
+          value={name}
+          onChange={handleChange}
+          type="text"
+          placeholder="z. B. Apfelsaft"
+        />
+      </label>
+      {errors.name && <div className="error">{errors.name}</div>}
 
-        <label>
-          <span className="label"> Preis:</span>
+      <label>
+        <span className="label"> Preis:</span>
 
-          <input
-            name="price"
-            value={price}
-            onChange={this.handleChange}
-            type="number"
-            placeholder="z. B. 3.99"
-            step="0.01"
-          />
-        </label>
-        {this.state.errors.price && (
-          <div className="error">{this.state.errors.price}</div>
-        )}
+        <input
+          name="price"
+          value={price}
+          onChange={handleChange}
+          type="number"
+          placeholder="z. B. 3.99"
+          step="0.01"
+        />
+      </label>
+      {errors.price && <div className="error">{errors.price}</div>}
 
-        <label>
-          <span className="label">Beschreibung:</span>
+      <label>
+        <span className="label">Beschreibung:</span>
 
-          <input
-            name="description"
-            value={description}
-            onChange={this.handleChange}
-            type="text"
-            placeholder="z. B. Frischer Bio-Apfelsaft"
-          />
-        </label>
-        {this.state.errors.duplicate && (
-          <div className="error">{this.state.errors.duplicate}</div>
-        )}
+        <input
+          name="description"
+          value={description}
+          onChange={handleChange}
+          type="text"
+          placeholder="z. B. Frischer Bio-Apfelsaft"
+        />
+      </label>
+      {errors.duplicate && (
+        <div className="error">{errors.duplicate}</div>
+      )}
 
-        <button type="submit">Produkt hinzufügen</button>
-      </form>
-    );
-  }
+      <button type="submit">Produkt hinzufügen</button>
+    </form>
+  );
 }
 
 export default FormNewProduct;
