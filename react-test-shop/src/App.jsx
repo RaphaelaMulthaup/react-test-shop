@@ -2,9 +2,10 @@ import { useState } from "react";
 import Navbar from "./components/navbar";
 import ShoppingCart from "./components/shopping-cart";
 import ProductPage from "./components/product-page";
+import { useCart } from "./hooks/useCart";
 
 function App() {
-  const [cartItems, setCartItems] = useState([]);
+  const { cartItems, addToCart, deleteItem, updateCartQuantity } = useCart();
   const [products, setProducts] = useState([
     {
       productId: 1,
@@ -31,46 +32,6 @@ function App() {
       description: "Text über Paprika",
     },
   ]);
-
-  const addToCart = (productId) => {
-    setCartItems((prevCartItems) => {
-      const exists = prevCartItems.some((item) => item.productId === productId);
-
-      if (exists) {
-        return prevCartItems.map((item) =>
-          item.productId === productId
-            ? { ...item, amount: item.amount + 1 }
-            : item
-        );
-      }
-
-      return [
-        ...prevCartItems,
-        {
-          productId: productId,
-          amount: 1,
-        },
-      ];
-    });
-  };
-
-  const deleteItem = (productId) => {
-    setCartItems((prevCartItems) =>
-      prevCartItems.filter((item) => item.productId !== productId)
-    );
-  };
-
-  const updateCartQuantity = (productId, change) => {
-    setCartItems((prevCartItems) =>
-      prevCartItems
-        .map((item) =>
-          item.productId === productId
-            ? { ...item, amount: item.amount + change }
-            : item
-        )
-        .filter((item) => item.amount > 0)
-    );
-  };
 
   const addNewProduct = (newProduct) => {
     setProducts((prevStateProducts) => [
