@@ -1,7 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function useCart() {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    const storedItems = localStorage.getItem("cartItems");
+
+    if (storedItems) {
+      return JSON.parse(storedItems);
+    }
+
+    return [];
+  });
 
   const addToCart = (productId) => {
     setCartItems((prevCartItems) => {
@@ -42,6 +50,10 @@ export function useCart() {
         .filter((item) => item.amount > 0),
     );
   };
+
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   return {
     cartItems,
