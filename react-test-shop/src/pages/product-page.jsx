@@ -1,7 +1,6 @@
-import Product from "./product";
-import FormNewProduct from "./form-new-product";
+import Product from "../components/product";
 
-const ProductPage = ({ products, onaddToCart, onAddNewProduct }) => {
+const ProductPage = ({ products, onaddToCart }) => {
   return (
     <div className="main-container-left">
       <div className="product-container">
@@ -15,8 +14,6 @@ const ProductPage = ({ products, onaddToCart, onAddNewProduct }) => {
           />
         ))}
       </div>
-
-      <FormNewProduct onSubmit={onAddNewProduct} existingProducts={products} />
     </div>
   );
 };

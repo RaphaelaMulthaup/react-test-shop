@@ -1,9 +1,14 @@
-const Navbar = () => (
-  <nav className="navbar navbar-light bg-light">
-    <a className="navbar-brand" href="/">
-      Navbar
-    </a>
-  </nav>
-);
+import { Link } from "react-router-dom";
+
+const Navbar = () => {
+  return (
+    <nav>
+      <h1>Mein Shop</h1>
+      <Link to="/products">Produkte</Link>
+      <Link to="/cart">Warenkorb</Link>
+      <Link to="/products/new">Neues Produkt</Link>
+    </nav>
+  );
+};
 
 export default Navbar;

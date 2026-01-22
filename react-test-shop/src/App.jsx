@@ -1,7 +1,9 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProductPage from "./pages/product-page";
+import CartPage from "./pages/CartPage";
+import NewProductPage from "./pages/NewProductPage";
 import { useState } from "react";
 import Navbar from "./components/navbar";
-import ShoppingCart from "./components/shopping-cart";
-import ProductPage from "./components/product-page";
 import { useCart } from "./hooks/useCart";
 
 function App() {
@@ -44,22 +46,39 @@ function App() {
   };
 
   return (
-    <>
+    <BrowserRouter>
       <Navbar />
-      <div className="main-container">
-        <ProductPage
-          products={products}
-          onaddToCart={addToCart}
-          onAddNewProduct={addNewProduct}
+      <Routes>
+        <Route
+          path="/"
+          element={<ProductPage products={products} onaddToCart={addToCart} />}
         />
-        <ShoppingCart
-          cartItems={cartItems}
-          products={products}
-          onChange={updateCartQuantity}
-          onDelete={deleteItem}
+        <Route
+          path="/products"
+          element={<ProductPage products={products} onaddToCart={addToCart} />}
         />
-      </div>
-    </>
+        <Route
+          path="/cart"
+          element={
+            <CartPage
+              cartItems={cartItems}
+              products={products}
+              onChange={updateCartQuantity}
+              onDelete={deleteItem}
+            />
+          }
+        />
+        <Route
+          path="/products/new"
+          element={
+            <NewProductPage
+              onSubmit={addNewProduct}
+              existingProducts={products}
+            />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
