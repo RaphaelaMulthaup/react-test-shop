@@ -11,6 +11,7 @@ const ProductPage = ({ products, onaddToCart }) => {
             title={product.name}
             description={product.description}
             price={product.price}
+            productId={product.productId}
           />
         ))}
       </div>

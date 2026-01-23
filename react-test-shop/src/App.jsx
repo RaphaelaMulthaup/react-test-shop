@@ -5,6 +5,7 @@ import NewProductPage from "./pages/NewProductPage";
 import { useState } from "react";
 import Navbar from "./components/navbar";
 import { useCart } from "./hooks/useCart";
+import ProductDetailPage from "./pages/ProductDetailPage";
 
 function App() {
   const { cartItems, addToCart, deleteItem, updateCartQuantity } = useCart();
@@ -76,6 +77,10 @@ function App() {
               existingProducts={products}
             />
           }
+        />
+        <Route
+          path="/product/:productId"
+          element={<ProductDetailPage products={products} />}
         />
       </Routes>
     </BrowserRouter>
