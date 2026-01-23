@@ -80,7 +80,9 @@ function App() {
         />
         <Route
           path="/product/:productId"
-          element={<ProductDetailPage products={products} />}
+          element={
+            <ProductDetailPage products={products} onAdd={addToCart} />
+          }
         />
       </Routes>
     </BrowserRouter>
