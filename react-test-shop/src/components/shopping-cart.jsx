@@ -3,7 +3,7 @@ import CartItem from "./cart-item";
 const ShoppingCart = ({ cartItems, products, onDelete, onChange }) => {
   const completeCartItems = cartItems
     .map((item) => {
-      const product = products.find((p) => p.productId === item.productId);
+      const product = products.find((p) => p.id === item.id);
       if (!product) return null;
       return { ...product, amount: item.amount };
     })
@@ -14,7 +14,7 @@ const ShoppingCart = ({ cartItems, products, onDelete, onChange }) => {
       <h2>Warenkorb</h2>
       {completeCartItems.map((item) => (
         <CartItem
-          key={item.productId}
+          key={item.id}
           {...item}
           onDelete={onDelete}
           onChange={onChange}

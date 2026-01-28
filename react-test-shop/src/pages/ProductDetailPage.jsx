@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
 
 function ProductDetailPage({ products, onAdd }) {
-  const { productId } = useParams();
-  const numericProductId = Number(productId);
+  const { id } = useParams();
+  const numericid = Number(id);
 
-  const product = products.find((p) => p.productId === numericProductId);
+  const product = products.find((p) => p.id === numericid);
 
   if (!product) {
     return <p>Produkt nicht gefunden</p>;
@@ -21,7 +21,7 @@ function ProductDetailPage({ products, onAdd }) {
       <p>Preis: {product.price} €</p>
       <p>{product.description}</p>
       <button
-        onClick={() => onAdd(product.productId)}
+        onClick={() => onAdd(product.id)}
         className="btn btn-primary"
       >
         Hinzufügen

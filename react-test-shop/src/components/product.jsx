@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Product = ({ title, description, price, onAdd, productId }) => {
+const Product = ({ title, description, price, onAdd, id }) => {
   return (
     <div className="card" style={{ width: "18rem" }}>
       <img
@@ -15,7 +15,7 @@ const Product = ({ title, description, price, onAdd, productId }) => {
         <button onClick={onAdd} className="btn btn-primary">
           Hinzufügen
         </button>
-        <Link to={`/product/${productId}`}>Details ansehen</Link>
+        <Link to={`/product/${id}`}>Details ansehen</Link>
       </div>
     </div>
   );

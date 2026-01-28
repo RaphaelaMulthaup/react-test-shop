@@ -1,28 +1,34 @@
 {
   "products": [
     {
-      "productId": 1,
+      "id": 1,
       "name": "Tomaten",
       "price": 2.5,
       "description": "Text über Tomaten"
     },
     {
-      "productId": 2,
+      "id": 2,
       "name": "Gurken",
-      "price": 3.0,
+      "price": 3,
       "description": "Text über Gurken"
     },
     {
-      "productId": 3,
+      "id": 3,
       "name": "Karotten",
       "price": 1.5,
       "description": "Text über Karotten"
     },
     {
-      "productId": 4,
+      "id": 4,
       "name": "Paprika",
-      "price": 2.0,
+      "price": 2,
       "description": "Text über Paprika"
+    },
+    {
+      "name": "Bananen",
+      "price": 7,
+      "description": "",
+      "id": 5
     }
   ]
 }
