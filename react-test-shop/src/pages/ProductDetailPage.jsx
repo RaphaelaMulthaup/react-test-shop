@@ -1,9 +1,15 @@
 import { useParams } from "react-router-dom";
 
-function ProductDetailPage({ products, onAdd }) {
+function ProductDetailPage({ products, isLoading, error, onAdd }) {
   const { id } = useParams();
   const numericid = Number(id);
+  if (isLoading) {
+    return <p>Lade Produkt …</p>;
+  }
 
+  if (error) {
+    return <p>Fehler beim Laden des Produkts</p>;
+  }
   const product = products.find((p) => p.id === numericid);
 
   if (!product) {
@@ -20,10 +26,7 @@ function ProductDetailPage({ products, onAdd }) {
       <h2>{product.name}</h2>
       <p>Preis: {product.price} €</p>
       <p>{product.description}</p>
-      <button
-        onClick={() => onAdd(product.id)}
-        className="btn btn-primary"
-      >
+      <button onClick={() => onAdd(product.id)} className="btn btn-primary">
         Hinzufügen
       </button>
     </div>
