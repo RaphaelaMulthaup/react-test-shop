@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import "./navbar.css";
 
 const Navbar = () => {
   return (
@@ -7,15 +8,14 @@ const Navbar = () => {
         <Link to="/products" className="navbar-brand fw-bold">
           Mein Shop
         </Link>
-        <div className="d-flex gap-2">
-          <Link to="/products" className="btn btn-outline-primary">
+        <div className="menu-links d-flex gap-3">
+          <Link to="/products" className="nav-link px-0" data-text="Produkte">
             Produkte
           </Link>
-
-          <Link to="/products/new" className="btn btn-outline-primary">
+          <Link to="/products/new" className="nav-link px-0" data-text="Neues Produkt">
             Neues Produkt
           </Link>
-          <Link to="/cart" className="btn btn-outline-primary">
+          <Link to="/cart" className="nav-link px-0" data-text="Warenkorb">
             Warenkorb
           </Link>
         </div>

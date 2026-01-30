@@ -1,0 +1,21 @@
+
+.nav-link {
+  position: relative;
+  color: #212529;
+display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.nav-link::after {
+  content: attr(data-text);
+  font-weight: 700;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  display: block;
+}
+
+.nav-link:hover {
+  font-weight: bold;
+  transform: scale(1.08);
+}
