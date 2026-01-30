@@ -11,7 +11,6 @@ const ShoppingCart = ({ cartItems, products, onDelete, onChange }) => {
 
   return (
     <div className="shopping-cart">
-      <h2>Warenkorb</h2>
       {completeCartItems.map((item) => (
         <CartItem
           key={item.id}
