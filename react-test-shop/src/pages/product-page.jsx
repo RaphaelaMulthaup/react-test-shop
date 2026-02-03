@@ -1,4 +1,5 @@
 import Product from "../components/product";
+import "./product-page.css";
 
 const ProductPage = ({ products, isLoading, error, onaddToCart }) => {
   if (isLoading) {
