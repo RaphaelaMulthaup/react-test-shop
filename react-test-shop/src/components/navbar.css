@@ -1,11 +1,16 @@
 .container-fluid {
   max-width: 1920px;
 }
-
+.menu-item {
+  min-width: 100px;     
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
 .nav-link {
   position: relative;
   color: #212529;
-display: inline-block;
+  display: inline-block;
   transition: transform 0.15s ease;
 }
 
@@ -19,6 +24,12 @@ display: inline-block;
 }
 
 .nav-link:hover {
-  font-weight: bold;
-  transform: scale(1.08);
+  transform: scale(1.05);
 }
+
+.nav-link.active {
+  font-weight: 700;
+  transform: scale(1.08);
+  cursor: default;
+}
+
