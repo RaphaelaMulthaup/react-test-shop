@@ -8,7 +8,7 @@ const Navbar = () => {
         <Link to="/products" className="navbar-brand fw-bold">
           Mein Shop
         </Link>
-        <div className="menu-links d-flex gap-3">
+        <div className="menu-links d-flex gap-3 me-3">
           <Link to="/products" className="nav-link px-0" data-text="Produkte">
             Produkte
           </Link>
